@@ -10,7 +10,7 @@ fi
 
 
 ### cleanup ===
-rm -rf ./*.exe
+rm -f ./*.exe
 
 
 ### winrar ###
@@ -41,22 +41,48 @@ cat ./.exec-work | xargs wget -qO- | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\
 rm ./.exec-work
 
 
+### geforce experience ###
+now=$(date +"%T")
+echo "<$now> Getting GeForce Experience..."
+wget -qO- https://www.nvidia.de/object/geforce-experience-download-de.html | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '//de\.download\.nvidia\.com/GFE/GFEClient/.*\.exe' > ./.exec-work
+sed -i '1 i\https:' ./.exec-work
+sed -i ':a;N;$!ba;s/\n/,/g' ./.exec-work
+sed -i 's/,//g' ./.exec-work
+cat ./.exec-work | xargs wget -q
+rm ./.exec-work
+
+
+### putty ###
+now=$(date +"%T")
+echo "<$now> Getting PuTTY..."
+wget -qO- https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo 'https://the\.earth\.li/~sgtatham/putty/latest/w64/putty-64bit-[0-9]\.[0-9]{2}-installer\.msi' | head -n1 | xargs wget -q
+
+
+### vlc ###
+now=$(date +"%T")
+echo "<$now> Getting VLC..."
+wget -qO- https://www.vlc.de/vlc_download_64bit.php | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]-win64\.exe' > ./.exec-work
+sed -i '1 i\https:' ./.exec-work
+sed -i ':a;N;$!ba;s/\n/,/g' ./.exec-work
+sed -i 's/,//g' ./.exec-work
+cat ./.exec-work | xargs wget -q
+rm ./.exec-work
+
+
 ### TODO ###
 # Teamspeak 3 Client
-# Putty
 # FileZilla
 # CrystalDiskInfo/Mark
-# Google Chrome
 # MP3Tag
 # Notepad++
 # OBS Studio
 # GPU-Z
-# VLC
 # WinDirStat
 
 
 ### move to destination ###
 now=$(date +"%T")
 echo "<$now> Copying to destination..."
-sudo rm /active_pool/programs/auto-download/*.exe	 # You will need to edit this path
-sudo cp ./*.exe /active_pool/programs/auto-download/ # You will need to edit this path
+rm /active_pool/programs/auto-download/*.exe	   # You will need to edit this path
+mv ./*.exe /active_pool/programs/auto-download/    # You will need to edit this path
+chmod +x /active_pool/programs/auto-download/*.exe # You will need to edit this path

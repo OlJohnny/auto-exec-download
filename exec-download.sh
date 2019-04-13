@@ -84,5 +84,6 @@ rm ./.exec-work
 now=$(date +"%T")
 echo "<$now> Copying to destination..."
 rm /active_pool/programs/auto-download/*.exe	   # You will need to edit this path
-mv ./*.exe /active_pool/programs/auto-download/    # You will need to edit this path
+cp ./*.exe /active_pool/programs/auto-download/    # You will need to edit this path
+rm -f ./*.exe
 chmod +x /active_pool/programs/auto-download/*.exe # You will need to edit this path

@@ -10,7 +10,7 @@ fi
 
 
 ### cleanup ===
-rm -f ./*.exe
+rm -f ./{*.exe,*.msi}
 
 
 ### winrar ###
@@ -83,8 +83,7 @@ rm ./.exec-work
 
 ### move to destination ###
 now=$(date +"%T")
-echo "<$now> Copying to destination..."
-rm /active_pool/programs/auto-download/*.exe	   # You will need to edit this path
-cp ./{*.exe,*.msi} /active_pool/programs/auto-download/    # You will need to edit this path
-rm -f ./{*.exe,*.msi}
+echo "<$now> Moving to destination..."
+rm /active_pool/programs/auto-download/{*.exe,*.msi}   # You will need to edit this path
+mv ./{*.exe,*.msi} /active_pool/programs/auto-download/    # You will need to edit this path
 chmod +x /active_pool/programs/auto-download/{*.exe,*.msi} # You will need to edit this path

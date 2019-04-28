@@ -16,57 +16,58 @@ rm -f ./*.exe
 ### winrar ###
 now=$(date +"%T")
 echo "<$now> Getting WinRar..."
-wget -qO- https://www.winrar.de/downld.php | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '(http|https):\/\/winrar.*x64-[0-9]{3}d\.exe' | xargs wget -q
+wget -qO- https://www.winrar.de/downld.php | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '(http|https):\/\/winrar.*x64-[0-9]{3}d\.exe' | xargs wget -q
 
 
 ### cpu-z ###
 now=$(date +"%T")
 echo "<$now> Getting CPU-Z..."
-wget -qO- https://www.cpuid.com/softwares/cpu-z.html | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '/downloads/cpu-z/cpu-z_[0-9]{1}\.[0-9]{2}-en\.exe' | head -n1 > ./.exec-work
+wget -qO- https://www.cpuid.com/softwares/cpu-z.html | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '/downloads/cpu-z/cpu-z_[0-9]{1}\.[0-9]{2}-en\.exe' | head -n1 > ./.exec-work
 sed -i '1 i\https://www.cpuid.com' ./.exec-work
 sed -i ':a;N;$!ba;s/\n/,/g' ./.exec-work
 sed -i 's/,//g' ./.exec-work
-cat ./.exec-work | xargs wget -qO- | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '(http|https)://download\.cpuid\.com/cpu-z/cpu-z_[0-9]\.[0-9]{2}-en\.exe' | xargs wget -q
+wget -qO- -i ./.exec-work | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '(http|https)://download\.cpuid\.com/cpu-z/cpu-z_[0-9]\.[0-9]{2}-en\.exe' | xargs wget -q
 rm ./.exec-work
 
 
 ### hwmonitor ###
 now=$(date +"%T")
 echo "<$now> Getting HWMonitor..."
-wget -qO- https://www.cpuid.com/softwares/hwmonitor.html | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '/downloads/hwmonitor/hwmonitor_[0-9]{1}\.[0-9]{2}\.exe' | head -n1 > ./.exec-work
+wget -qO- https://www.cpuid.com/softwares/hwmonitor.html | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '/downloads/hwmonitor/hwmonitor_[0-9]{1}\.[0-9]{2}\.exe' | head -n1 > ./.exec-work
 sed -i '1 i\https://www.cpuid.com' ./.exec-work
 sed -i ':a;N;$!ba;s/\n/,/g' ./.exec-work
 sed -i 's/,//g' ./.exec-work
-cat ./.exec-work | xargs wget -qO- | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '(http|https)://download\.cpuid\.com/hwmonitor/hwmonitor_[0-9]\.[0-9]{2}\.exe' | xargs wget -q
+wget -qO- -i ./.exec-work | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '(http|https)://download\.cpuid\.com/hwmonitor/hwmonitor_[0-9]\.[0-9]{2}\.exe' | xargs wget -q
 rm ./.exec-work
 
 
 ### geforce experience ###
 now=$(date +"%T")
 echo "<$now> Getting GeForce Experience..."
-wget -qO- https://www.nvidia.de/object/geforce-experience-download-de.html | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '//de\.download\.nvidia\.com/GFE/GFEClient/.*\.exe' > ./.exec-work
+wget -qO- https://www.nvidia.de/object/geforce-experience-download-de.html | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '//de\.download\.nvidia\.com/GFE/GFEClient/.*\.exe' > ./.exec-work
 sed -i '1 i\https:' ./.exec-work
 sed -i ':a;N;$!ba;s/\n/,/g' ./.exec-work
 sed -i 's/,//g' ./.exec-work
-cat ./.exec-work | xargs wget -q
+wget -qi ./.exec-work
 rm ./.exec-work
 
 
 ### putty ###
 now=$(date +"%T")
 echo "<$now> Getting PuTTY..."
-wget -qO- https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo 'https://the\.earth\.li/~sgtatham/putty/latest/w64/putty-64bit-[0-9]\.[0-9]{2}-installer\.msi' | head -n1 | xargs wget -q
+wget -qO- https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'https://the\.earth\.li/~sgtatham/putty/latest/w64/putty-64bit-[0-9]\.[0-9]{2}-installer\.msi' | head -n1 | xargs wget -q
 
 
 ### vlc ###
 now=$(date +"%T")
 echo "<$now> Getting VLC..."
-wget -qO- https://www.vlc.de/vlc_download_64bit.php | grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' | grep -Eo '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]-win64\.exe' > ./.exec-work
+wget -qO- https://www.vlc.de/vlc_download_64bit.php | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]-win64\.exe' > ./.exec-work
 sed -i '1 i\https:' ./.exec-work
 sed -i ':a;N;$!ba;s/\n/,/g' ./.exec-work
 sed -i 's/,//g' ./.exec-work
-cat ./.exec-work | xargs wget -q
+wget -qi ./.exec-work
 rm ./.exec-work
+
 
 
 ### TODO ###

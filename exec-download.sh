@@ -64,6 +64,17 @@ echo "<$(date +"%T")> Getting MP3Tag..."
 wget -qO- https://www.mp3tag.de/dodownload.html | sed -e ':a;N;$!ba;s/\s\{2\}\n//g' | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'https://download\.mp3tag\.de/mp3tagv[0-9]{3}setup.exe' | xargs wget -q
 
 
+### java ###
+echo "<$(date +"%T")> Getting Java (JRE)..."
+wget -qO- https://java.com/de/download/manual.jsp | grep -Eoi '<a title="Download der Java-Software für Windows \(64-Bit\)" href="[^\"]+"' | grep -Eo 'https://javadl\.oracle\.com/webapps/download/AutoDL\?BundleId=[0-9]{6}_([0-9]|[a-z]){32}' | head -n1 | xargs wget -q
+echo "JRE " > ./.exec-work
+wget -qO- https://java.com/de/download/manual.jsp | grep -Eoi 'Version [0-9] Update [0-9]{3}' >> ./.exec-work
+echo ".exe" >> ./.exec-work
+sed -i ':a;N;$!ba;s/\n//g' ./.exec-work
+cat ./.exec-work | xargs -I {} mv AutoDL\?BundleId\=* {}
+rm ./.exec-work
+
+
 
 ### TODO ###
 # Teamspeak 3 Client
@@ -73,6 +84,7 @@ wget -qO- https://www.mp3tag.de/dodownload.html | sed -e ':a;N;$!ba;s/\s\{2\}\n/
 # OBS Studio
 # GPU-Z
 # WinDirStat
+# KeePass
 
 
 ### move to destination ###

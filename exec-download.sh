@@ -61,7 +61,7 @@ rm ./.exec-work
 
 ### mp3tag ###
 echo "<$(date +"%T")> Getting MP3Tag..."
-wget -qO- https://www.mp3tag.de/dodownload.html | sed -e ':a;N;$!ba;s/\s\{2\}\n//g' | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'https://download\.mp3tag\.de/mp3tagv[0-9]{3}setup.exe' | xargs wget -q
+wget -qO- https://www.mp3tag.de/dodownload.html | sed -e ':a;N;$!ba;s/\s\{2\}\n//g' | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'https://download\.mp3tag\.de/mp3tagv[0-9]{3}setup\.exe' | xargs wget -q
 
 
 ### java ###
@@ -75,16 +75,37 @@ cat ./.exec-work | xargs -I {} mv AutoDL\?BundleId\=* {}
 rm ./.exec-work
 
 
+### notepad++ ###
+echo "<$(date +"%T")> Getting Notepad++..."
+wget -qO- https://notepad-plus-plus.org/download | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo '/repository/[0-9]\.x/[0-9]\.[0-9]\.[0-9]/npp\.[0-9]\.[0-9]\.[0-9]\.Installer\.x64\.exe' | head -n1 > ./.exec-work
+sed -i '1 i\https://notepad-plus-plus.org' ./.exec-work
+sed -i ':a;N;$!ba;s/\n//g' ./.exec-work
+wget -qi ./.exec-work
+rm ./.exec-work
+
+
+### balena etcher ###
+echo "<$(date +"%T")> Getting Balena Etcher..."
+wget -qO- https://www.balena.io/etcher/ | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'https://github\.com/balena-io/etcher/releases/download/v[0-9]\.[0-9]\.[0-9]{2}/balenaEtcher-Setup-[0-9]\.[0-9]\.[0-9]{2}-x64\.exe' | xargs wget -q
+
+
+### teamspeak client ###
+echo "<$(date +"%T")> Getting Teamspeak Client..."
+wget -qO- https://www.teamspeak.de/download/teamspeak-3-64-Bit-client-windows/ | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'http://dl\.4players\.de/ts/releases/[0-9]\.[0-9]\.[0-9]/TeamSpeak3-Client-win64-[0-9]\.[0-9]\.[0-9]\.exe' | xargs wget -q
+
+
+### filezilla ###
+echo "<$(date +"%T")> Getting FileZilla..."
+wget -qO- -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://filezilla-project.org/download.php?type=client | grep -Eoi '<a.+href="[^\"]+"' | grep -Eo 'https://download\.filezilla-project\.org/client/FileZilla_[0-9]\.[0-9]{2}\.[0-9]_win64_sponsored-setup\.exe' | head -n1 | xargs wget -q
+
+
 
 ### TODO ###
-# Teamspeak 3 Client
-# FileZilla
 # CrystalDiskInfo/Mark
-# Notepad++
 # OBS Studio
 # GPU-Z
 # WinDirStat
-# KeePass
+# KeePass (Difficulties with Sourceforge)
 
 
 ### move to destination ###

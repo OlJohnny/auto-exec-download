@@ -1,5 +1,25 @@
 #!/bin/bash
 
+##### FUNCTIONS #####
+### install dos2unix function ###
+var1func(){
+read -p "Do you want to install dos2unix? (Needed to correctly display the log file on windows systems) (y|n): " var1
+if [[ $var1 == "y" ]]
+then
+	echo "Installing dos2unix..."
+	apt-get --yes install dos2unix
+elif [[ $var1 == "n" ]]
+then
+	echo "Package is needed to complete the run of this script."
+	echo "Exiting..."
+	exit
+else
+	var1func
+fi
+}
+
+
+
 ##### PREPARATION #####
 ### check for root privilges ###
 if [ "$EUID" -ne 0 ]
@@ -20,8 +40,19 @@ done
 echo ""
 
 
+### install dos2unix ###
+echo "Checking if dos2unix is installed..."
+
+if [ $(dpkg-query -W -f='${Status}' dos2unix 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+	var1func
+else
+	echo "Package dos2unix is already installed"
+fi
+
+
 ### cleanup ###
-rm -r ./tmp-aed
+rm -rf ./tmp-aed
 mkdir ./tmp-aed
 
 
@@ -135,4 +166,5 @@ echo "<$(date +"%T")> Moving to destination..."
 rm /active_pool/programs/auto-download/*.{exe,msi,log}   # You will need to edit this path
 mv ./tmp-aed/*.{exe,msi,log} /active_pool/programs/auto-download/    # You will need to edit this path
 chmod +x /active_pool/programs/auto-download/*.{exe,msi,log} # You will need to edit this path
+unix2dos /active_pool/programs/auto-download/*.log
 rm -r ./tmp-aed

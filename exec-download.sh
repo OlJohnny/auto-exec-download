@@ -283,12 +283,35 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/FileZilla_*_win64_s
 rm ./tmp-aed/.exec-*
 
 
+### keepass ###
+## download ##
+echo -e "\e[0m\n<$(date +"%T")> Getting KeePass...\e[90m"
+# get link to download page
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}\.[0-9]/' | head --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://sourceforge\.net' ./tmp-aed/.exec-work
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+# get link to download page
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://sourceforge\.net/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}\.[0-9]/KeePass-[0-9]\.[0-9]{1,2}\.[0-9]-Setup\.exe' | head --lines=1 > ./tmp-aed/.exec-work1
+sed --in-place 's|https://sourceforge|https://netcologne.dl.sourceforge|' ./tmp-aed/.exec-work1
+# download exec
+wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
+echo -en "\e[0m"
+
+## rename ##
+echo "./tmp-aed/KeePass  " > ./tmp-aed/.exec-rename
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/ | grep --extended-regexp --only-matching --ignore-case 'KeePass-[0-9]\.[0-9]{1,2}\.[0-9]-Setup\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]' >> ./tmp-aed/.exec-rename
+echo ".exe" >> ./tmp-aed/.exec-rename
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/KeePass-*-Setup.exe {}
+rm ./tmp-aed/.exec-*
+
+
 ### TODO ###
 # CrystalDiskInfo/Mark
 # OBS Studio
 # GPU-Z
 # WinDirStat
-# KeePass (Difficulties with Sourceforge)
+# Sumatra PDF
 
 
 

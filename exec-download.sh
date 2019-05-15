@@ -74,6 +74,7 @@ wget --quiet --output-document=- https://www.winrar.de/downld.php | grep --exten
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/WinRAR " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.winrar.de/downld.php | grep --extended-regexp --only-matching --ignore-case 'Aktuelle Version: WinRAR [0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -86,6 +87,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting CPU-Z...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- https://www.cpuid.com/softwares/cpu-z.html | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/downloads/cpu-z/cpu-z_[0-9]{1}\.[0-9]{2}-en\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://www.cpuid.com' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
@@ -94,6 +96,7 @@ wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work | grep --exte
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/CPU-Z " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case 'cpu-z_[0-9]\.[0-9]{1,2}-en\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -106,6 +109,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting HWMonitor...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- https://www.cpuid.com/softwares/hwmonitor.html | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/downloads/hwmonitor/hwmonitor_[0-9]{1}\.[0-9]{2}\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://www.cpuid.com' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
@@ -114,6 +118,7 @@ wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work | grep --exte
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/HWMonitor " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case 'hwmonitor_[0-9]\.[0-9]{1,2}\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -126,6 +131,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting GeForce Experience...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- https://www.nvidia.de/object/geforce-experience-download-de.html | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '//de\.download\.nvidia\.com/GFE/GFEClient/.*\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https:' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
@@ -134,6 +140,7 @@ wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefi
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/GeForce Experience " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.nvidia.de/object/geforce-experience-download-de.html | grep --extended-regexp --only-matching --ignore-case 'Version:.*[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -150,6 +157,7 @@ wget --quiet --output-document=- https://www.chiark.greenend.org.uk/~sgtatham/pu
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/PuTTY " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html | grep --extended-regexp --only-matching --ignore-case 'Currently this is [0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".msi" >> ./tmp-aed/.exec-rename
@@ -162,6 +170,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting VLC...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]-win64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https:' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
@@ -170,6 +179,7 @@ wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefi
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/VLC " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case 'Media Player V[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -186,6 +196,7 @@ wget --quiet --output-document=- https://www.mp3tag.de/dodownload.html | sed --e
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/Mp3tag " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.mp3tag.de/en/download.html | grep --extended-regexp --only-matching --ignore-case 'Mp3tag v[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -202,6 +213,7 @@ wget --quiet --output-document=- https://java.com/de/download/manual.jsp | grep 
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/JRE " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://java.com/de/download/manual.jsp | grep --extended-regexp --only-matching --ignore-case 'Version [0-9] Update [0-9]{1,3}' | sed --regexp-extended 's/Version //;s/ Update /\./' | head --lines=1 >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -214,6 +226,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Notepad++...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- https://notepad-plus-plus.org/download | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/repository/[0-9]\.x/[0-9]\.[0-9]\.[0-9]/npp\.[0-9]\.[0-9]\.[0-9]\.Installer\.x64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://notepad-plus-plus.org' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
@@ -223,6 +236,7 @@ echo -en "\e[0m"
 rm ./tmp-aed/.exec-work
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/Notepad++ " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://notepad-plus-plus.org/download | grep --extended-regexp --only-matching --ignore-case 'Download Notepad\+\+ [0-9]\.[0-9]\.[0-9]' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -235,6 +249,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Balena Etcher...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- https://github.com/balena-io/etcher/releases | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/balena-io/etcher/releases/download/v[0-9]\.[0-9]\.[0-9]{1,2}/balenaEtcher-Setup-[0-9]\.[0-9]\.[0-9]{1,2}-x64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://github\.com' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
@@ -243,6 +258,7 @@ wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefi
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/balenaEtcher " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://github.com/balena-io/etcher/releases | grep --extended-regexp --only-matching --ignore-case 'v[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -259,6 +275,7 @@ wget --quiet --output-document=- https://www.teamspeak.de/download/teamspeak-3-6
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/Teamspeak 3 Client " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.teamspeak.de/download/teamspeak-3-64-Bit-client-windows/ | grep --extended-regexp --only-matching --ignore-case 'TS3 Win64 Client [0-9]\.[0-9]\.[0-9]' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -275,6 +292,7 @@ wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win
 echo -en "\e[0m"
 
 ## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/FileZilla  " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://filezilla-project.org/download.php?type=client | grep --extended-regexp --only-matching --ignore-case 'FileZilla Client is [0-9]\.[0-9]{1,2}\.[0-9]' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
@@ -287,18 +305,20 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting KeePass...\e[90m"
 # get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
 wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}\.[0-9]/' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://sourceforge\.net' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 # get link to download page
 wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://sourceforge\.net/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}\.[0-9]/KeePass-[0-9]\.[0-9]{1,2}\.[0-9]-Setup\.exe' | head --lines=1 > ./tmp-aed/.exec-work1
-sed --in-place 's|https://sourceforge|https://netcologne.dl.sourceforge|' ./tmp-aed/.exec-work1
+sed --in-place 's|https://sourceforge.net/projects/keepass/files/|https://netcologne.dl.sourceforge.net/project/keepass/|' ./tmp-aed/.exec-work1
 # download exec
 wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
 echo -en "\e[0m"
 
 ## rename ##
-echo "./tmp-aed/KeePass  " > ./tmp-aed/.exec-rename
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
+echo "./tmp-aed/KeePass " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/ | grep --extended-regexp --only-matching --ignore-case 'KeePass-[0-9]\.[0-9]{1,2}\.[0-9]-Setup\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
@@ -310,23 +330,37 @@ rm ./tmp-aed/.exec-*
 # CrystalDiskInfo/Mark
 # OBS Studio
 # GPU-Z
-# WinDirStat
 # Sumatra PDF
+# WinDirStat (low priority, as there hasn't been an update in years)
 
 
 
 ##### FINISHING #####
 ### making log ###
-echo -en "\e[0m"
-echo -e "\e[92mSuccessfully downloaded $(find ./tmp-aed/*.{exe,msi} | wc --lines)/12 programms\e[0m" | tee ./tmp-aed/aed-$(date +%Y.%m.%d-%H-%M-%S).log
-find ./tmp-aed/*.{exe,msi} >> ./tmp-aed/aed-$(date +%Y.%m.%d-%H-%M-%S).log
-sed --in-place 's/tmp-aed\///' ./tmp-aed/*.log
+echo -e "\e[92m"
+touch ./tmp-aed/aed-$(date +%Y.%m.%d-%H.%M.%S).log
+echo "Successfully downloaded $(find ./tmp-aed/*.{exe,msi} | wc --lines)/13 programms" | tee ./tmp-aed/aed-*.log
+echo -e "\e[0m"
+find ./tmp-aed/*.{exe,msi} >> ./tmp-aed/aed-*.log
+sed --in-place 's/tmp-aed\///' ./tmp-aed/aed-*.log
 
 
 ### move to destination ###
-echo -e "\n<$(date +"%T")> Moving to destination..."
-rm /active_pool/programs/auto-download/*.{exe,msi,log}   # You will need to edit this path
-mv ./tmp-aed/*.{exe,msi,log} /active_pool/programs/auto-download/    # You will need to edit this path
-chmod +x /active_pool/programs/auto-download/*.{exe,msi,log} # You will need to edit this path
-unix2dos --quiet /active_pool/programs/auto-download/*.log
+# The intention is to move the downloaded executables to a network share
+echo -e "<$(date +"%T")> Moving to destination..."
+if [[ ! -d "/active_pool/programs/auto-download/logs" ]]              # You will need to edit this path
+then
+	mkdir /active_pool/programs/auto-download/logs                    # You will need to edit this path
+fi
+
+rm /active_pool/programs/auto-download/*.{exe,msi}                    # You will need to edit this path
+mv ./tmp-aed/*.{exe,msi} /active_pool/programs/auto-download/         # You will need to edit this path
+mv ./tmp-aed/*.log /active_pool/programs/auto-download/logs/          # You will need to edit this path
+# set fitting permissions and unix user/group to executables
+chown www-data:jm-cz /active_pool/programs/auto-download/*.{exe,msi}  # You will need to edit this path, unix user and unix group
+chmod +x /active_pool/programs/auto-download/*.{exe,msi}              # You will need to edit this path
+# set fitting permissions and unix user/group to logs
+chown www-data:jm-cz /active_pool/programs/auto-download/logs/*.log   # You will need to edit this path, unix user and unix group
+chmod +x /active_pool/programs/auto-download/logs/*.log              # You will need to edit this path
+unix2dos --quiet /active_pool/programs/auto-download/logs/*.log       # You will need to edit this path
 rm --recursive ./tmp-aed

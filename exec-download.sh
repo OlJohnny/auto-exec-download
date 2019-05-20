@@ -227,7 +227,7 @@ rm ./tmp-aed/.exec-*
 echo -e "\e[0m\n<$(date +"%T")> Getting Notepad++...\e[90m"
 # get link to download page
 echo "<$(date +"%T")> Getting Download Link..."
-wget --quiet --output-document=- https://notepad-plus-plus.org/download | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/repository/[0-9]\.x/[0-9]\.[0-9]\.[0-9]/npp\.[0-9]\.[0-9]\.[0-9]\.Installer\.x64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
+wget --quiet --output-document=- https://notepad-plus-plus.org/download | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/repository/[0-9]\.x/[0-9]\.[0-9](\.[0-9])?/npp\.[0-9]\.[0-9](\.[0-9])?\.Installer\.x64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://notepad-plus-plus.org' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 # download exec
@@ -238,7 +238,7 @@ rm ./tmp-aed/.exec-work
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/Notepad++ " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- https://notepad-plus-plus.org/download | grep --extended-regexp --only-matching --ignore-case 'Download Notepad\+\+ [0-9]\.[0-9]\.[0-9]' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]' >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://notepad-plus-plus.org/download | grep --extended-regexp --only-matching --ignore-case 'Download Notepad\+\+ [0-9]\.[0-9](\.[0-9])?' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9](\.[0-9])?' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/npp.*.Installer.x64.exe {}

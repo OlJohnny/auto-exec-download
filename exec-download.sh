@@ -293,7 +293,7 @@ echo -en "\e[0m"
 
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
-echo "./tmp-aed/FileZilla  " > ./tmp-aed/.exec-rename
+echo "./tmp-aed/FileZilla " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://filezilla-project.org/download.php?type=client | grep --extended-regexp --only-matching --ignore-case 'FileZilla Client is [0-9]\.[0-9]{1,2}\.[0-9]' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
@@ -326,8 +326,78 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/KeePass-*-Setup.exe
 rm ./tmp-aed/.exec-*
 
 
+### Audacity ###
+## download ##
+echo -e "\e[0m\n<$(date +"%T")> Getting Audacity...\e[90m"
+# get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/audacity/files/audacity/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/audacity/files/audacity/[0-9]\.[0-9]\.[0-9]/' | head --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://sourceforge\.net' ./tmp-aed/.exec-work
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+# get link to download page
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://sourceforge.net/projects/audacity/files/audacity/[0-9]\.[0-9]\.[0-9]/audacity-win-[0-9]\.[0-9]\.[0-9]\.exe' | head --lines=1 > ./tmp-aed/.exec-work1
+sed --in-place 's|https://sourceforge.net/projects/audacity/files/|https://netcologne.dl.sourceforge.net/project/audacity/|' ./tmp-aed/.exec-work1
+# download exec
+wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
+echo -en "\e[0m"
+
+## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
+echo "./tmp-aed/Audacity " > ./tmp-aed/.exec-rename
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/audacity/files/ | grep --extended-regexp --only-matching --ignore-case 'audacity-win-[0-9]\.[0-9]\.[0-9]\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]' >> ./tmp-aed/.exec-rename
+echo ".exe" >> ./tmp-aed/.exec-rename
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/audacity-win-*.exe {}
+rm ./tmp-aed/.exec-*
+
+
+### CrystalDiskInfo ###
+## download ##
+echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskInfo...\e[90m"
+# get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
+wget --quiet --output-document=- https://osdn.net/projects/crystaldiskinfo/releases/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/crystaldiskinfo/downloads/[0-9]{5}/CrystalDiskInfo[0-9]_[0-9]_[0-9]\.zip/' | grep --extended-regexp --only-matching '[0-9]{5}/CrystalDiskInfo[0-9]_[0-9]_[0-9]' | head --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://osdn\.net/frs/redir\.php?f=crystaldiskinfo/' ./tmp-aed/.exec-work
+echo ".exe" >> ./tmp-aed/.exec-work
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+# download exec
+wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
+echo -en "\e[0m"
+
+## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
+echo "./tmp-aed/" > ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://osdn.net/projects/crystaldiskinfo/ | grep --extended-regexp --only-matching --ignore-case 'CrystalDiskInfo [0-9]\.[0-9]\.[0-9]' | head --lines=1 >> ./tmp-aed/.exec-rename
+echo ".exe" >> ./tmp-aed/.exec-rename
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/*CrystalDiskInfo*.exe {}
+rm ./tmp-aed/.exec-*
+
+
+### CrystalDiskMark ###
+## download ##
+echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskMark...\e[90m"
+# get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
+wget --quiet --output-document=- https://osdn.net/projects/crystaldiskmark/releases/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/crystaldiskmark/downloads/[0-9]{5}/CrystalDiskMark[0-9]_[0-9]_[0-9]\.zip/' | grep --extended-regexp --only-matching '[0-9]{5}/CrystalDiskMark[0-9]_[0-9]_[0-9]' | head --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://osdn\.net/frs/redir\.php?f=crystaldiskmark/' ./tmp-aed/.exec-work
+echo ".exe" >> ./tmp-aed/.exec-work
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+# download exec
+wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
+echo -en "\e[0m"
+
+## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
+echo "./tmp-aed/" > ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://osdn.net/projects/crystaldiskmark/ | grep --extended-regexp --only-matching --ignore-case 'CrystalDiskMark [0-9]\.[0-9]\.[0-9]' | head --lines=1 >> ./tmp-aed/.exec-rename
+echo ".exe" >> ./tmp-aed/.exec-rename
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/*crystaldiskmark*.exe {}
+rm ./tmp-aed/.exec-*
+
+
 ### TODO ###
-# CrystalDiskInfo/Mark
 # OBS Studio
 # GPU-Z
 # Sumatra PDF
@@ -339,7 +409,7 @@ rm ./tmp-aed/.exec-*
 ### making log ###
 echo -e "\e[92m"
 touch ./tmp-aed/aed-$(date +%Y.%m.%d-%H.%M.%S).log
-echo "Successfully downloaded $(find ./tmp-aed/*.{exe,msi} | wc --lines)/13 programms" | tee ./tmp-aed/aed-*.log
+echo "Successfully downloaded $(find ./tmp-aed/*.{exe,msi} | wc --lines)/16 programms" | tee ./tmp-aed/aed-*.log
 echo -e "\e[0m"
 find ./tmp-aed/*.{exe,msi} >> ./tmp-aed/aed-*.log
 sed --in-place 's/tmp-aed\///' ./tmp-aed/aed-*.log

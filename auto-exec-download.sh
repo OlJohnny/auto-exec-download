@@ -221,7 +221,7 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/mp3tagv*setup.exe {
 rm ./tmp-aed/.exec-*
 
 
-### java ###
+### jre ###
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Java (JRE)...\e[90m"
 # download exec
@@ -261,7 +261,7 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/npp.*.Installer.x64
 rm ./tmp-aed/.exec-*
 
 
-### balena etcher ###
+### balenaetcher ###
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Balena Etcher...\e[90m"
 # get link to download page
@@ -342,7 +342,7 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/KeePass-*-Setup.exe
 rm ./tmp-aed/.exec-*
 
 
-### Audacity ###
+### audacity ###
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Audacity...\e[90m"
 # get link to download page
@@ -367,7 +367,7 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/audacity-win-*.exe 
 rm ./tmp-aed/.exec-*
 
 
-### CrystalDiskInfo ###
+### crystaldiskinfo ###
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskInfo...\e[90m"
 # get link to download page
@@ -390,7 +390,7 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/*CrystalDiskInfo*.e
 rm ./tmp-aed/.exec-*
 
 
-### CrystalDiskMark ###
+### crystaldiskmark ###
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskMark...\e[90m"
 # get link to download page
@@ -429,6 +429,15 @@ echo "Successfully downloaded $(find ./tmp-aed/*.{exe,msi} | wc --lines)/16 prog
 echo -e "\e[0m"
 find ./tmp-aed/*.{exe,msi} >> ./tmp-aed/aed-*.log
 sed --in-place 's/tmp-aed\///' ./tmp-aed/aed-*.log
+echo -e "\nNew Versions:" >> ./tmp-aed/aed-*.log
+
+for i in winrar cpu-z hwmonitor geforce[[:space:]]experience putty vlc mp3tag jre notepad++ balenaetcher teamspeak[[:space:]]3[[:space:]]client filezilla keepass audacity crystaldiskinfo crystaldiskmark
+do
+if [[ "$(find "${copyto}"/*.{exe,msi} | sed "s|"${copyto}"||" | (grep --ignore-case "${i}" || echo ""${i}" not downloaded"))" != "$(find ./tmp-aed/*.{exe,msi} | sed "s|./tmp-aed||" | (grep --ignore-case "${i}" || echo "not present"))" ]]
+then
+	echo ""$(find ./tmp-aed/*.{exe,msi} | sed "s|./tmp-aed||" | (grep --ignore-case "${i}" || echo ""${i}" not downloaded"))" from "$(find "${copyto}"/*.{exe,msi} | sed "s|"${copyto}"||" | (grep --ignore-case "${i}" || echo "not present"))"" >> ./tmp-aed/aed-*.log
+fi
+done
 
 
 ### move to destination ###

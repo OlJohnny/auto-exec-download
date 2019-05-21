@@ -7,6 +7,13 @@ set -o nounset
 # set -o xtrace		# uncomment the previous statement for debugging
 
 
+##### ENVIRONMENT VARIABLES #####
+# please change THIS path to where you want the executeables to be copied to after auto-downloading
+# in the directory you enter, a folder named 'logs' will be created and after a complete run of this script a log will be added there
+# NOTE: do NOT put a '/' at the end
+copyto=/path/for/execs/to/be/copied/to
+
+
 
 ##### FUNCTIONS #####
 ### install dos2unix function ###
@@ -32,8 +39,18 @@ fi
 ### check for root privilges ###
 if [[ "${EUID}" -ne 0 ]]
 then
-  echo -e "\e[91mPlease run as root.\e[39m Root privileges are needed to move and delete files"
-  exit
+	echo -e "\e[91mPlease run as root.\e[39m Root privileges are needed to move and delete files"
+	echo "Exiting..."
+	exit
+fi
+
+
+### check environment variables ###
+if [[ "${copyto}" == /path/for/execs/to/be/copied/to ]]
+then
+	echo -e "\e[91mPlease change environment variable in line 14.\e[39m Correctly set environment variable are needed to complete the run of this script"
+	echo "Exiting..."
+	exit
 fi
 
 
@@ -50,8 +67,7 @@ echo ""
 
 ### install dos2unix ###
 echo "Checking if dos2unix is installed..."
-
-if [[ $(dpkg-query --show --showformat='${Status}' dos2unix 2>/dev/null | grep --count "ok installed") -eq 0 ]];
+if [[ $(dpkg-query --show --showformat='${Status}' dos2unix 2>/dev/null | grep --count "ok installed") -eq 0 ]]
 then
 	_var1func
 else
@@ -418,19 +434,17 @@ sed --in-place 's/tmp-aed\///' ./tmp-aed/aed-*.log
 ### move to destination ###
 # The intention is to move the downloaded executables to a network share
 echo -e "<$(date +"%T")> Moving to destination..."
-if [[ ! -d "/active_pool/programs/auto-download/logs" ]]              # You will need to edit this path
+if [[ ! -d ""${copyto}"/logs" ]]
 then
-	mkdir /active_pool/programs/auto-download/logs                    # You will need to edit this path
+	mkdir "${copyto}"/logs
 fi
 
-rm /active_pool/programs/auto-download/*.{exe,msi}                    # You will need to edit this path
-mv ./tmp-aed/*.{exe,msi} /active_pool/programs/auto-download/         # You will need to edit this path
-mv ./tmp-aed/*.log /active_pool/programs/auto-download/logs/          # You will need to edit this path
-# set fitting permissions and unix user/group to executables
-chown www-data:jm-cz /active_pool/programs/auto-download/*.{exe,msi}  # You will need to edit this path, unix user and unix group
-chmod +x /active_pool/programs/auto-download/*.{exe,msi}              # You will need to edit this path
-# set fitting permissions and unix user/group to logs
-chown www-data:jm-cz /active_pool/programs/auto-download/logs/*.log   # You will need to edit this path, unix user and unix group
-chmod +x /active_pool/programs/auto-download/logs/*.log              # You will need to edit this path
-unix2dos --quiet /active_pool/programs/auto-download/logs/*.log       # You will need to edit this path
+rm "${copyto}"/*.{exe,msi}
+mv ./tmp-aed/*.{exe,msi} "${copyto}"
+mv ./tmp-aed/*.log "${copyto}"/logs
+# set fitting permissions to executables
+chmod +x "${copyto}"/*.{exe,msi}
+# set fitting permissions to logs
+chmod +x "${copyto}"/logs/*.log
+unix2dos --quiet "${copyto}"/logs/*.log
 rm --recursive ./tmp-aed

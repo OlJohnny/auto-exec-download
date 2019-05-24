@@ -352,7 +352,7 @@ sed --in-place '1 i\https://sourceforge\.net' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 # get link to download page
 wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://sourceforge.net/projects/audacity/files/audacity/[0-9]\.[0-9]\.[0-9]/audacity-win-[0-9]\.[0-9]\.[0-9]\.exe' | head --lines=1 > ./tmp-aed/.exec-work1
-sed --in-place 's|https://sourceforge.net/projects/audacity/files/|https://netcologne.dl.sourceforge.net/project/audacity/|' ./tmp-aed/.exec-work1
+sed --in-place 's|https://sourceforge.net/projects/audacity/files/|https://kent.dl.sourceforge.net/project/audacity/|' ./tmp-aed/.exec-work1
 # download exec
 wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
 echo -en "\e[0m"

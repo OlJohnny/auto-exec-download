@@ -417,6 +417,13 @@ rm ./tmp-aed/.exec-*
 # OBS Studio
 # GPU-Z
 # Sumatra PDF
+# Subtitle Edit
+# MKV Tool Nix
+# MikTex
+# AutoHotKey
+# Avidemux
+# TeXMaker (low priority, as there hasn't been an update in years)
+# MKV Cleaver (low priority, as there hasn't been an update in years)
 # WinDirStat (low priority, as there hasn't been an update in years)
 
 
@@ -450,10 +457,10 @@ fi
 
 rm "${copyto}"/*.{exe,msi}
 mv ./tmp-aed/*.{exe,msi} "${copyto}"
+unix2dos --quiet ./tmp-aed/*.log
 mv ./tmp-aed/*.log "${copyto}"/logs
 # set fitting permissions to executables
 chmod +x "${copyto}"/*.{exe,msi}
 # set fitting permissions to logs
 chmod +x "${copyto}"/logs/*.log
-unix2dos --quiet "${copyto}"/logs/*.log
 rm --recursive ./tmp-aed

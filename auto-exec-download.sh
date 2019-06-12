@@ -187,7 +187,7 @@ rm ./tmp-aed/.exec-*
 echo -e "\e[0m\n<$(date +"%T")> Getting VLC...\e[90m"
 # get link to download page
 echo "<$(date +"%T")> Getting Download Link..."
-wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]-win64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
+wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?-win64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https:' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 # download exec
@@ -197,7 +197,7 @@ echo -en "\e[0m"
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/VLC " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case 'Media Player V[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case 'Media Player V[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/vlc-*-win64.exe {}
@@ -388,6 +388,29 @@ cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/*crystaldiskmark*.e
 rm ./tmp-aed/.exec-*
 
 
+### avidemux ###
+## download ##
+echo -e "\e[0m\n<$(date +"%T")> Getting Avidemux...\e[90m"
+# get link to download page
+echo "<$(date +"%T")> Getting Download Link..."
+wget --quiet --output-document=- https://www.avidemux.org/nightly/win64/ | grep --extended-regexp --only-matching --ignore-case "<a.+href='[^\"]+'" | grep --extended-regexp --only-matching '/avidemux_[0-9]\.[0-9]\.[0-9] r[0-9]{1,6}_win64\.exe' | tail --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://www.avidemux.org/nightly/win64/' ./tmp-aed/.exec-work
+sed --in-place 's| |%20|g' ./tmp-aed/.exec-work
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+# download exec
+wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
+echo -en "\e[0m"
+
+## rename ##
+echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
+echo "./tmp-aed/Avidemux " > ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://www.avidemux.org/nightly/win64/ | grep --extended-regexp --only-matching --ignore-case "<a.+href='[^\"]+'" | grep --extended-regexp --only-matching '/avidemux_[0-9]\.[0-9]\.[0-9] r[0-9]{1,6}_win64\.exe' | tail --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]' >> ./tmp-aed/.exec-rename
+echo ".exe" >> ./tmp-aed/.exec-rename
+sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/avidemux*.exe {}
+rm ./tmp-aed/.exec-*
+
+
 ### TODO ###
 # OBS Studio
 # GPU-Z
@@ -396,7 +419,6 @@ rm ./tmp-aed/.exec-*
 # MKV Tool Nix
 # MikTex
 # AutoHotKey
-# Avidemux
 # Audacity (not possible by fosshub)
 # TeXMaker (low priority, as there hasn't been an update in years)
 # MKV Cleaver (low priority, as there hasn't been an update in years)
@@ -414,7 +436,7 @@ find ./tmp-aed/*.{exe,msi} >> ./tmp-aed/aed-*.log
 sed --in-place 's/tmp-aed\///' ./tmp-aed/aed-*.log
 echo -e "\nNew Versions:" >> ./tmp-aed/aed-*.log
 
-for i in winrar cpu-z hwmonitor geforce[[:space:]]experience putty vlc mp3tag jre notepad++ balenaetcher teamspeak[[:space:]]3[[:space:]]client filezilla keepass audacity crystaldiskinfo crystaldiskmark
+for i in winrar cpu-z hwmonitor geforce[[:space:]]experience putty vlc mp3tag jre notepad++ balenaetcher teamspeak[[:space:]]3[[:space:]]client filezilla keepass crystaldiskinfo crystaldiskmark avidemux
 do
 if [[ "$(find "${copyto}"/*.{exe,msi} | sed "s|"${copyto}"||" | (grep --ignore-case "${i}" || echo ""${i}" not downloaded"))" != "$(find ./tmp-aed/*.{exe,msi} | sed "s|./tmp-aed||" | (grep --ignore-case "${i}" || echo "not present"))" ]]
 then

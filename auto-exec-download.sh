@@ -266,7 +266,7 @@ rm ./tmp-aed/.exec-*
 echo -e "\e[0m\n<$(date +"%T")> Getting Balena Etcher...\e[90m"
 # get link to download page
 echo "<$(date +"%T")> Getting Download Link..."
-wget --quiet --output-document=- https://github.com/balena-io/etcher/releases | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/balena-io/etcher/releases/download/v[0-9]\.[0-9]\.[0-9]{1,2}/balenaEtcher-Setup-[0-9]\.[0-9]\.[0-9]{1,2}-x64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
+wget --quiet --output-document=- https://github.com/balena-io/etcher/releases | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/balena-io/etcher/releases/download/v[0-9]\.[0-9]\.[0-9]{1,2}/balenaEtcher-Setup-[0-9]\.[0-9]\.[0-9]{1,2}\.exe' | head --lines=1 > ./tmp-aed/.exec-work
 sed --in-place '1 i\https://github\.com' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 # download exec
@@ -279,7 +279,7 @@ echo "./tmp-aed/balenaEtcher " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://github.com/balena-io/etcher/releases | grep --extended-regexp --only-matching --ignore-case 'v[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
-cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/balenaEtcher-Setup-*-x64.exe {}
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/balenaEtcher-Setup-*.exe {}
 rm ./tmp-aed/.exec-*
 
 

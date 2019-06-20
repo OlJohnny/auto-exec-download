@@ -287,7 +287,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Teamspeak 3 Client...\e[90m"
 # download exec
-wget --quiet --output-document=- https://www.teamspeak.de/download/teamspeak-3-64-Bit-client-windows/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'http://dl\.4players\.de/ts/releases/[0-9]\.[0-9]\.[0-9]/TeamSpeak3-Client-win64-[0-9]\.[0-9]\.[0-9]\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
+wget --quiet --output-document=- https://www.teamspeak.de/download/teamspeak-3-64-Bit-client-windows/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://files\.teamspeak-services\.com/releases/client/[0-9]\.[0-9]\.[0-9]/TeamSpeak3-Client-win64-[0-9]\.[0-9]\.[0-9]\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
 echo -en "\e[0m"
 
 ## rename ##

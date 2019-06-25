@@ -187,8 +187,8 @@ rm ./tmp-aed/.exec-*
 echo -e "\e[0m\n<$(date +"%T")> Getting VLC...\e[90m"
 # get link to download page
 echo "<$(date +"%T")> Getting Download Link..."
-wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '//files\.vlc\.de/vlc/vlc-[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?-win64\.exe' | head --lines=1 > ./tmp-aed/.exec-work
-sed --in-place '1 i\https:' ./tmp-aed/.exec-work
+wget --quiet --output-document=- https://artfiles.org/videolan.org/vlc/last/win64/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'vlc-[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?-win64.exe' | head --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://artfiles.org/videolan.org/vlc/last/win64/' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 # download exec
 wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
@@ -197,7 +197,7 @@ echo -en "\e[0m"
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/VLC " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- https://www.vlc.de/vlc_download_64bit.php | grep --extended-regexp --only-matching --ignore-case 'Media Player V[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?' >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://www.videolan.org/vlc/ | grep --extended-regexp --only-matching --ignore-case '"latestVersion":"[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?"' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/vlc-*-win64.exe {}

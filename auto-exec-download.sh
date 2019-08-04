@@ -148,17 +148,13 @@ rm ./tmp-aed/.exec-*
 echo -e "\e[0m\n<$(date +"%T")> Getting GeForce Experience...\e[90m"
 # get link to download page
 echo "<$(date +"%T")> Getting Download Link..."
-wget --quiet --output-document=- https://www.nvidia.de/object/geforce-experience-download-de.html | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '//de\.download\.nvidia\.com/GFE/GFEClient/.*\.exe' | head --lines=1 > ./tmp-aed/.exec-work
-sed --in-place '1 i\https:' ./tmp-aed/.exec-work
-sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
-# download exec
-wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
+wget --quiet --output-document=- https://www.nvidia.com/de-de/geforce/geforce-experience/ | grep --extended-regexp --only-matching --ignore-case "<a.+href='[^\"]+'" | grep --extended-regexp --only-matching 'https://de\.download\.nvidia\.com/GFE/GFEClient/[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}/GeForce_Experience_v[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
 echo -en "\e[0m"
 
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/GeForce Experience " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- https://www.nvidia.de/object/geforce-experience-download-de.html | grep --extended-regexp --only-matching --ignore-case 'Version:.*[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}' >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- https://www.nvidia.com/de-de/geforce/geforce-experience/ | grep --extended-regexp --only-matching --ignore-case "<a.+href='[^\"]+'" | grep --extended-regexp --only-matching 'GeForce_Experience_v[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/GeForce_Experience_*.exe {}

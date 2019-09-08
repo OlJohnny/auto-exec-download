@@ -86,7 +86,7 @@ mkdir ./tmp-aed
 ## download ##
 echo -e "\n<$(date +"%T")> Getting WinRar...\e[90m"
 # download exec
-wget --quiet --output-document=- https://www.winrar.de/downld.php | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '(http|https):\/\/winrar.*x64-[0-9]{3}d\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
+wget --quiet --output-document=- https://www.winrar.de/downld.php | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://www\.netzmechanik\.de/dl/4/winrar-x64-[0-9]{3}d\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
 echo -en "\e[0m"
 
 ## rename ##

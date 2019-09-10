@@ -389,21 +389,23 @@ rm ./tmp-aed/.exec-*
 echo -e "\e[0m\n<$(date +"%T")> Getting Avidemux...\e[90m"
 # get link to download page
 echo "<$(date +"%T")> Getting Download Link..."
-wget --quiet --output-document=- https://www.avidemux.org/nightly/win64/ | grep --extended-regexp --only-matching --ignore-case "<a.+href='[^\"]+'" | grep --extended-regexp --only-matching '/avidemux_[0-9]\.[0-9]\.[0-9] r[0-9]{1,6}_win64\.exe' | tail --lines=1 > ./tmp-aed/.exec-work
-sed --in-place '1 i\https://www.avidemux.org/nightly/win64/' ./tmp-aed/.exec-work
-sed --in-place 's| |%20|g' ./tmp-aed/.exec-work
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/avidemux/files/avidemux/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/avidemux/files/avidemux/[0-9]\.[0-9]\.[0-9]{1,2}/' | head --lines=1 > ./tmp-aed/.exec-work
+sed --in-place '1 i\https://sourceforge\.net' ./tmp-aed/.exec-work
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+# get link to download page
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://sourceforge\.net/projects/avidemux/files/avidemux/[0-9]\.[0-9]\.[0-9]{1,2}/Avidemux.*[0-9]\.[0-9]\.[0-9]{1,2}.*64.*exe' | head --lines=1 > ./tmp-aed/.exec-work1
+sed --in-place 's|https://sourceforge.net/projects/avidemux/files/|https://netcologne.dl.sourceforge.net/project/avidemux/|' ./tmp-aed/.exec-work1
 # download exec
-wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
+wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
 echo -en "\e[0m"
 
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/Avidemux " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- https://www.avidemux.org/nightly/win64/ | grep --extended-regexp --only-matching --ignore-case "<a.+href='[^\"]+'" | grep --extended-regexp --only-matching '/avidemux_[0-9]\.[0-9]\.[0-9] r[0-9]{1,6}_win64\.exe' | tail --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]' >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/avidemux/files/avidemux/ | grep --extended-regexp --only-matching --ignore-case 'Avidemux.*[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
-cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/avidemux*.exe {}
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/*videmux*.exe {}
 rm ./tmp-aed/.exec-*
 
 

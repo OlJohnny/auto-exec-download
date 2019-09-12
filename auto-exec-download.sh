@@ -331,7 +331,7 @@ echo -en "\e[0m"
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/KeePass " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/ | grep --extended-regexp --only-matching --ignore-case 'KeePass-[0-9]\.[0-9]{1,2}(\.[0-9])?-Setup\.exe' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}(\.[0-9])?' >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}(\.[0-9])?' | head --lines=1 >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/KeePass-*-Setup.exe {}
@@ -402,7 +402,7 @@ echo -en "\e[0m"
 ## rename ##
 echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 echo "./tmp-aed/Avidemux " > ./tmp-aed/.exec-rename
-wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/avidemux/files/avidemux/ | grep --extended-regexp --only-matching --ignore-case 'Avidemux.*[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 >> ./tmp-aed/.exec-rename
+wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/avidemux/files/avidemux/ | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching '/projects/avidemux/files/avidemux/[0-9]\.[0-9]\.[0-9]{1,2}/' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]\.[0-9]{1,2}' | head --lines=1 >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/*videmux*.exe {}

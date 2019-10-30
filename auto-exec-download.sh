@@ -204,7 +204,7 @@ rm ./tmp-aed/.exec-*
 ## download ##
 echo -e "\e[0m\n<$(date +"%T")> Getting Mp3tag...\e[90m"
 # download exec
-wget --quiet --output-document=- https://www.mp3tag.de/dodownload.html | sed --expression=':a;N;$!ba;s/\s\{2\}\n//g' | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://download\.mp3tag\.de/mp3tagv[0-9]{3}setup\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
+wget --quiet --output-document=- https://www.mp3tag.de/dodownload.html | sed --expression=':a;N;$!ba;s/\s\{2\}\n//g' | grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' | grep --extended-regexp --only-matching 'https://download\.mp3tag\.de/mp3tagv[0-9]{3}.*\.exe' | head --lines=1 | xargs wget --quiet --show-progress --directory-prefix=./tmp-aed/
 echo -en "\e[0m"
 
 ## rename ##
@@ -213,7 +213,7 @@ echo "./tmp-aed/Mp3tag " > ./tmp-aed/.exec-rename
 wget --quiet --output-document=- https://www.mp3tag.de/en/download.html | grep --extended-regexp --only-matching --ignore-case 'Mp3tag v[0-9]\.[0-9]{1,2}' | head --lines=1 | grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}' >> ./tmp-aed/.exec-rename
 echo ".exe" >> ./tmp-aed/.exec-rename
 sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
-cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/mp3tagv*setup.exe {}
+cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/mp3tagv*.exe {}
 rm ./tmp-aed/.exec-*
 
 

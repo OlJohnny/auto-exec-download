@@ -66,7 +66,7 @@ fi
 ### check environment variables ###
 if [[ "${copyto}" == /path/for/execs/to/be/copied/to ]]
 then
-	echo -e "\e[91mPlease change environment variable in line 14.\e[39m Correctly set environment variable are needed to complete the run of this script"
+	echo -e "\e[91mPlease change environment variable in line 26.\e[39m\nCorrectly set environment variables are needed to complete the run of this script."
 	echo "Exiting..."
 	exit
 fi
@@ -130,9 +130,9 @@ fi
 if [[ "${cpu_z}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting CPU-Z...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting CPU-Z..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- https://www.cpuid.com/softwares/cpu-z.html |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '/downloads/cpu-z/cpu-z_[0-9]{1}\.[0-9]{2}-en\.exe' |
@@ -140,6 +140,7 @@ then
 	sed --in-place '1 i\https://www.cpuid.com' ./tmp-aed/.exec-work
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '(http|https)://download\.cpuid\.com/cpu-z/cpu-z_[0-9]\.[0-9]{1,2}-en\.exe' |
@@ -165,9 +166,9 @@ fi
 if [[ "${hwmonitor}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting HWMonitor...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting HWMonitor..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- https://www.cpuid.com/softwares/hwmonitor.html |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '/downloads/hwmonitor/hwmonitor_[0-9]{1}\.[0-9]{2}\.exe' |
@@ -175,6 +176,7 @@ then
 	sed --in-place '1 i\https://www.cpuid.com' ./tmp-aed/.exec-work
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '(http|https)://download\.cpuid\.com/hwmonitor/hwmonitor_[0-9]\.[0-9]{2}\.exe' |
@@ -256,9 +258,9 @@ fi
 if [[ "${vlc}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting VLC...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting VLC..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- https://artfiles.org/videolan.org/vlc/last/win64/ |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching 'vlc-[0-9]\.[0-9]\.[0-9]{1,2}(\.[0-9])?-win64.exe' |
@@ -266,6 +268,7 @@ then
 	sed --in-place '1 i\https://artfiles.org/videolan.org/vlc/last/win64/' ./tmp-aed/.exec-work
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
 	echo -en "\e[0m"
 
@@ -342,25 +345,27 @@ fi
 if [[ "${notepad_pp}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting Notepad++...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting Notepad++..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
-	wget --quiet --output-document=- https://notepad-plus-plus.org/download |
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
+	wget --quiet --output-document=- https://notepad-plus-plus.org/downloads/ |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
-		grep --extended-regexp --only-matching '/repository/[0-9]\.x/[0-9]\.[0-9](\.[0-9])?/npp\.[0-9]\.[0-9](\.[0-9])?\.Installer\.x64\.exe' |
+		grep --extended-regexp --only-matching 'https://notepad-plus-plus\.org/downloads/v[0-9]\.[0-9](\.[0-9])?/' |
 		head --lines=1 > ./tmp-aed/.exec-work
-	sed --in-place '1 i\https://notepad-plus-plus.org' ./tmp-aed/.exec-work
-	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+	wget --quiet --output-document=- --input-file=./tmp-aed/.exec-work |
+		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
+		grep --extended-regexp --only-matching 'http://download\.notepad-plus-plus\.org/repository/[0-9]\.x/[0-9]\.[0-9](\.[0-9])?/npp\.[0-9]\.[0-9](\.[0-9])?\.Installer\.x64\.exe' |
+		head --lines=1 > ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
 	echo -en "\e[0m"
-	rm ./tmp-aed/.exec-work
 
 	## rename ##
 	echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
 	echo "./tmp-aed/Notepad++ " > ./tmp-aed/.exec-rename
-	wget --quiet --output-document=- https://notepad-plus-plus.org/download |
-		grep --extended-regexp --only-matching --ignore-case 'Download Notepad\+\+ [0-9]\.[0-9](\.[0-9])?' |
+	wget --quiet --output-document=- https://notepad-plus-plus.org/downloads |
+		grep --extended-regexp --only-matching --ignore-case 'Notepad++ [0-9]\.[0-9](\.[0-9])? release' |
 		head --lines=1 |
 		grep --extended-regexp --only-matching '[0-9]\.[0-9](\.[0-9])?' >> ./tmp-aed/.exec-rename
 	echo ".exe" >> ./tmp-aed/.exec-rename
@@ -374,9 +379,9 @@ fi
 if [[ "${balenaetcher}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting Balena Etcher...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting Balena Etcher..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- https://github.com/balena-io/etcher/releases |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '/balena-io/etcher/releases/download/v[0-9]\.[0-9]\.[0-9]{1,2}/balenaEtcher-Setup-[0-9]\.[0-9]\.[0-9]{1,2}\.exe' |
@@ -384,6 +389,7 @@ then
 	sed --in-place '1 i\https://github\.com' ./tmp-aed/.exec-work
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
 	echo -en "\e[0m"
 
@@ -451,45 +457,53 @@ then
 	echo ".exe" >> ./tmp-aed/.exec-rename
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
 	cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/FileZilla_*_win64_sponsored-setup.exe {}
-	rm ./tmp-aed/.exec-*
+	rm --force ./tmp-aed/.exec-*
 fi
 
 
 ### keepass ###
-if [[ "${winrar}" == 1 ]]
+if [[ "${keepass}" == 1 ]]
 then
-	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting KeePass...\e[90m"
-	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
-	wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ |
-		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
-		grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/' |
-		head --lines=1 > ./tmp-aed/.exec-work
-	sed --in-place '1 i\https://sourceforge\.net' ./tmp-aed/.exec-work
-	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
-	# get link to download page
-	wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work |
-		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
-		grep --extended-regexp --only-matching 'https://sourceforge\.net/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/KeePass-[0-9]\.[0-9]{1,2}(\.[0-9])?-Setup\.exe' |
-		head --lines=1 > ./tmp-aed/.exec-work1
-	sed --in-place 's|https://sourceforge.net/projects/keepass/files/|https://netcologne.dl.sourceforge.net/project/keepass/|' ./tmp-aed/.exec-work1
-	# download exec
-	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
-	echo -en "\e[0m"
+        ## download ##
+        echo -e "\e[0m\n<$(date +"%T")> Getting KeePass..."
+        # get link to download page
+        echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
+echo "a:" > /dev/null
+        wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ |
+                grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
+                grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/' |
+                head --lines=1 >  ./tmp-aed/.exec-work
+echo "b: $(cat ./tmp-aed/.exec-work)" > /dev/null
+        sed --in-place '1 i\https://sourceforge.net' ./tmp-aed/.exec-work
+        sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
+        # get link to download page
+echo "e: $(cat ./tmp-aed/.exec-work)" > /dev/null
+        wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" --input-file=./tmp-aed/.exec-work |
+                grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
+                grep --extended-regexp --only-matching 'https://sourceforge\.net/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/KeePass-[0-9]\.[0-9]{1,2}(\.[0-9])?-Setup\.exe' |
+                head --lines=1 > ./tmp-aed/.exec-work1
+echo "f: $(cat ./tmp-aed/.exec-work1)" > /dev/null
+        sed --in-place 's|https://sourceforge.net/projects/keepass/files/|https://netcologne.dl.sourceforge.net/project/keepass/|' ./tmp-aed/.exec-work1
+        # download exec
+        echo -en "\e[90m"
+        wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
+        echo -en "\e[0m"
 
-	## rename ##
-	echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
-	echo "./tmp-aed/KeePass " > ./tmp-aed/.exec-rename
-	wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ |
-		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
-		grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/' |
-		head --lines=1 |
-		grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}(\.[0-9])?' | head --lines=1 >> ./tmp-aed/.exec-rename
-	echo ".exe" >> ./tmp-aed/.exec-rename
-	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
-	cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/KeePass-*-Setup.exe {}
-	rm ./tmp-aed/.exec-*
+        ## rename ##
+        echo -e "\e[90m<$(date +"%T")> Renaming...\e[0m"
+        echo "./tmp-aed/KeePass " > ./tmp-aed/.exec-rename
+echo "i: $(cat ./tmp-aed/.exec-rename)" > /dev/null
+        wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/keepass/files/KeePass%202.x/ |
+                grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
+                grep --extended-regexp --only-matching '/projects/keepass/files/KeePass%202\.x/[0-9]\.[0-9]{1,2}(\.[0-9])?/' |
+                head --lines=1 |
+                grep --extended-regexp --only-matching '[0-9]\.[0-9]{1,2}(\.[0-9])?' |
+                head --lines=1 >> ./tmp-aed/.exec-rename
+echo "j: $(cat ./tmp-aed/.exec-rename)" > /dev/null
+        echo ".exe" >> ./tmp-aed/.exec-rename
+        sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-rename
+        cat ./tmp-aed/.exec-rename | xargs --replace={} mv ./tmp-aed/KeePass-*-Setup.exe {}
+        rm ./tmp-aed/.exec-*
 fi
 
 
@@ -497,9 +511,9 @@ fi
 if [[ "${crystaldiskinfo}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskInfo...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskInfo..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- https://osdn.net/projects/crystaldiskinfo/releases/ |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '/projects/crystaldiskinfo/downloads/[0-9]{5}/CrystalDiskInfo[0-9]_[0-9]_[0-9]\.zip/' |
@@ -509,6 +523,7 @@ then
 	echo ".exe" >> ./tmp-aed/.exec-work
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
 	echo -en "\e[0m"
 
@@ -529,18 +544,19 @@ fi
 if [[ "${crystaldiskmark}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskMark...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting CrystalDiskMark..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- https://osdn.net/projects/crystaldiskmark/releases/ |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
-		grep --extended-regexp --only-matching '/projects/crystaldiskmark/downloads/[0-9]{5}/CrystalDiskMark[0-9]_[0-9]_[0-9]\.zip/' |
+		grep --extended-regexp --only-matching '/projects/crystaldiskmark/downloads/[0-9]{5}/CrystalDiskMark[0-9]_[0-9]_[0-9].\.zip/' |
 		grep --extended-regexp --only-matching '[0-9]{5}/CrystalDiskMark[0-9]_[0-9]_[0-9]' |
 		head --lines=1 > ./tmp-aed/.exec-work
 	sed --in-place '1 i\https://osdn\.net/frs/redir\.php?f=crystaldiskmark/' ./tmp-aed/.exec-work
 	echo ".exe" >> ./tmp-aed/.exec-work
 	sed --in-place ':a;N;$!ba;s/\n//g' ./tmp-aed/.exec-work
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work --directory-prefix=./tmp-aed/
 	echo -en "\e[0m"
 
@@ -561,9 +577,9 @@ fi
 if [[ "${avidemux}" == 1 ]]
 then
 	## download ##
-	echo -e "\e[0m\n<$(date +"%T")> Getting Avidemux...\e[90m"
+	echo -e "\e[0m\n<$(date +"%T")> Getting Avidemux..."
 	# get link to download page
-	echo "<$(date +"%T")> Getting Download Link..."
+	echo -e "\e[90m<$(date +"%T")> Getting Download Link...\e[0m"
 	wget --quiet --output-document=- --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://sourceforge.net/projects/avidemux/files/avidemux/ |
 		grep --extended-regexp --only-matching --ignore-case '<a.+href="[^\"]+"' |
 		grep --extended-regexp --only-matching '/projects/avidemux/files/avidemux/[0-9]\.[0-9]\.[0-9]{1,2}/' |
@@ -577,6 +593,7 @@ then
 		head --lines=1 > ./tmp-aed/.exec-work1
 	sed --in-place 's|https://sourceforge.net/projects/avidemux/files/|https://netcologne.dl.sourceforge.net/project/avidemux/|' ./tmp-aed/.exec-work1
 	# download exec
+	echo -en "\e[90m"
 	wget --quiet --show-progress --input-file=./tmp-aed/.exec-work1 --directory-prefix=./tmp-aed/
 	echo -en "\e[0m"
 

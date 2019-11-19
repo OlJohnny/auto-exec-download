@@ -655,7 +655,7 @@ then
 	mkdir "${copyto}"/logs
 fi
 
-rm "${copyto}"/*.{exe,msi}
+rm --force "${copyto}"/*.{exe,msi}
 mv ./tmp-aed/*.{exe,msi} "${copyto}"
 unix2dos --quiet ./tmp-aed/*.log
 mv ./tmp-aed/*.log "${copyto}"/logs
@@ -663,4 +663,4 @@ mv ./tmp-aed/*.log "${copyto}"/logs
 chmod +x "${copyto}"/*.{exe,msi}
 # set fitting permissions to logs
 chmod +x "${copyto}"/logs/*.log
-rm --recursive ./tmp-aed
+rm --recursive --force ./tmp-aed
